@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Software Engineering Model</title>
+  </head>
+  <body>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script src="swem.js"></script>
+	<script src="draw.js"></script>
+
+	<canvas id="myCanvas" width="1600" height="500" style="border:2px solid #c303c3;">
+	</canvas>
+
+	<button onclick="go()">Run</button>
+	<br/>
+
+	<input type="range" min="5" max="40" value="5"oninput="updateRangeInput(this)">
+	<output id="scope" name="scope" for="scope">10</output>&nbsp Scope
+
+	<br/>
+
+	<input type="range" id="iterations" name="iterations" min="0" max="20" value="1" oninput="updateRangeInput(this)">
+	<output id="iterations" name="iterations" for="iterations">1</output>&nbsp Iterations
+	<br/>
+
+	<input type="range" id="sprintsize" min="5" max="350" value="1" oninput="updateRangeInput(this)"/>
+	<output id="sprintsize" name="sprintsize" for="sprintsize">5</output>&nbsp Sprintsize
+	<br/>
+
+	<input type="range" id="teamsize" min="1" max="100" value="1" oninput="updateRangeInput(this)"/>
+	<output id="teamsize" name="teamsize" for="teamsize">1</output>&nbsp Teamsize
+	<br/>
+
+	<input type="range" id="uncertainty" min="0" max="100" value="0" oninput="updateRangeInput(this)"/>
+	<output id="uncertainty" name="uncertainty" for="uncertainty">0</output>&nbsp Uncertainty
+	<br/>
+
+	<input type="range" id="lag" min="0" max="20" value="0" oninput="updateRangeInput(this)"/>
+	<output id="lag" name="lag" for="lag">0</output>&nbsp Lag
+</body>
+</html>
