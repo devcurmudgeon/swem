@@ -2,10 +2,10 @@ function updateRangeInput(elem) {$(elem).next().val($(elem).val());}
 
 function Engineer(){
 	this.name = Math.random().toString(36).substring(7);
-	this.experience = [Math.random(), Math.random(), Math.random(), Math.random()];
-	this.aptitude =  Math.random();
-	this.motivation =  Math.random();
-	this.colour = "yellow";
+	this.relevance =  dice($('#relevance'));
+	this.aptitude = dice($('#aptitude'));
+	this.motivation =  dice($('#motivation'));
+	this.colour = "grey";
 	this.issues = [];
 
 	this.work = function(issue){
@@ -17,12 +17,14 @@ function Engineer(){
 			// adjust issue
 		} else {
 			console.log(this.name, " blocked");
+			this.colour = "grey";
+		}
+
+		if (this.motivation < 50) {
 			this.colour = "red";
 		}
-		if (Math.random() > 0.5){
-			this.colour = "blue";
-		}
 	}
+
 
 	this.draw = function(ctx, id, day){
 		ctx.fillStyle = this.colour;
@@ -41,15 +43,18 @@ function Team(){
 
 function Scope(){
 	this.issues = [];
-	for (i = 0; i < $('#issues').val(); i++) {
+	for (i = 0; i < $('#scope').val(); i++) {
 		this.issues[i] = new Issue();
 	}
 }
 
 function Issue(){
-	this.kind = [Math.random(), Math.random(), Math.random(), Math.random()];
-	this.size = Math.random() * project.size;
-	this.complete = Math.random();
+	var State = Object.freeze({wishlist:1, todo:2, doing:3, review:4, done:5})
+	var Importance = Object.freeze({E:1, D:2, C:3, B:4, A:5})
+	this.size = dice($('#scope'));
+	this.state = State.wishlist;
+	this.importance = dice(3, 1, 5);
+	console.log("Issue:", this.size, this.state, this.importance);
 }
 
 function Project(p){
@@ -82,9 +87,52 @@ function simulate(project, ctx){
 	project.draw(ctx);
 }
 
+function curve(peak, min, max) {
+	count = new Array(max).fill(0);
+	for (i = 0; i < 5000; i++) {
+		count[dice(peak, min, max)] += 1;
+	}
+	console.log("min-max", count[min + 2], count[max - 2])
+
+	for (i = min; i < max; i++) {
+//		console.log("graph", i, count[i]);
+		ctx.fillStyle = "green";
+		ctx.moveTo(500 + i*1,400);
+		ctx.lineTo(500 + i*1,400 - count[i]);
+		ctx.arc(500 + i*1,400 - count[i], 1, 0 , Math.PI*2);ctx.fill();
+		ctx.closePath();
+	}
+}
+
+function dice(peak, min=1, max=100) {
+	// generates a random integer in approximate bell curve around value
+	if (typeof peak != 'number') {
+		peak = parseInt(peak.val());
+	}
+
+	mid = max / 2;
+	r = 0;
+	v = 4;
+	for (d = 0; d < v; d++) {
+		r += Math.random();
+	}
+
+	r = (max - min) * r / v;
+
+	if (r < mid ) {
+		r = min + r * (peak - min)/(mid - min)
+	} else {
+		r = peak + (r - mid) * (max - peak)/(max - mid);
+	}
+
+	console.log("result", peak, min, max, Math.floor(r) + min);
+	return Math.floor(r);
+}
+
 function go(){
 	ctx = document.getElementById("myCanvas").getContext("2d");
 	ctx.clearRect(0,0,1000,500);
+//	curve (200, 1, 400);
 
 	project = new Project();
 	var timer = setInterval(function(){simulate(project, ctx)}, 50);
