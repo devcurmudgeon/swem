@@ -45,6 +45,7 @@ function Scope(){
 	this.issues = [];
 	for (i = 0; i < $('#scope').val(); i++) {
 		this.issues[i] = new Issue();
+		document.getElementById("wishlist").innerHTML = i.toString();
 	}
 }
 
