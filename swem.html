@@ -24,20 +24,20 @@
 	<output id="scope" name="scope" for="scope">10</output>&nbsp Scope
 	<br/>
 
+	<input type="range" id="sprintsize" min="1" max="350" value="20" oninput="updateRangeInput(this)"/>
+	<output id="sprintsize" name="sprintsize" for="sprintsize">20</output>&nbsp Sprintsize
+	<br/>
+
 	<input type="range" id="iterations" name="iterations" min="1" max="20" value="1" oninput="updateRangeInput(this)">
 	<output id="iterations" name="iterations" for="iterations">1</output>&nbsp Iterations
 	<br/>
 
-	<input type="range" id="sprintsize" min="1" max="350" value="5" oninput="updateRangeInput(this)"/>
-	<output id="sprintsize" name="sprintsize" for="sprintsize">5</output>&nbsp Sprintsize
+	<input type="range" id="teamsize" min="1" max="100" value="6" oninput="updateRangeInput(this)"/>
+	<output id="teamsize" name="teamsize" for="teamsize">6</output>&nbsp Teamsize
 	<br/>
 
-	<input type="range" id="teamsize" min="1" max="100" value="1" oninput="updateRangeInput(this)"/>
-	<output id="teamsize" name="teamsize" for="teamsize">1</output>&nbsp Teamsize
-	<br/>
-
-	<input type="range" id="motivation" min="1" max="100" value="1" oninput="updateRangeInput(this)"/>
-	<output id="teamsize" name="motivation" for="motivation">1</output>&nbsp Motivation
+	<input type="range" id="motivation" min="1" max="100" value="50" oninput="updateRangeInput(this)"/>
+	<output id="teamsize" name="motivation" for="motivation">50</output>&nbsp Motivation
 	<br/>
 
 	<input type="range" id="relevance" min="1" max="100" value="1" oninput="updateRangeInput(this)"/>
@@ -60,11 +60,13 @@
 
 	<td valign="top">
 		<table>
+		<tr>Kanban</tr>
 		<tr>
 			<td>Wishlist</td>
 			<td>Todo</td>
 			<td>Doing</td>
 			<td>Review</td>
+			<td>Blocked</td>
 			<td>Done</td>
 		</tr>
 		<tr>
@@ -72,10 +74,21 @@
 			<td id="todo">0</td>
 			<td id="doing">0</td>
 			<td id="review">0</td>
+			<td id="blocked">0</td>
 			<td id="done">0</td>
 		</table>
-	<br/>
-	</tr></table>
+	</td>
+	<td valign="top">
+		<table><tr>Engineer: <input id="engineer" value=0></tr>
+			<tr><td>Name: <var id="name">....</var></td></tr>
+			<tr><td>Issues: <var id="issues">0</var></td></tr>
+			<tr><td>Motivation: <var id="emotivation">0</var></td></tr>
+			<tr><td>Aptitude: <var id="eaptitude">0</var></td></tr>
+			<tr><td>Relevance: <var id="erelevance">0</var></td></tr>
+		</table>
+	</td>
+  </tr>
+</table>
 
 	<canvas id="myCanvas" width="1600" height="500" style="border:2px solid #c303c3;">
 	</canvas>

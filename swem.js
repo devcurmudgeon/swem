@@ -4,7 +4,7 @@ function Engineer(){
 	this.name = Math.random().toString(36).substring(7);
 	this.relevance =  dice($('#relevance'));
 	this.aptitude = dice($('#aptitude'));
-	this.motivation =  dice($('#motivation'));
+	this.motivation = dice($('#motivation'));
 	this.colour = "grey";
 	this.issues = [];
 
@@ -17,7 +17,7 @@ function Engineer(){
 			// adjust issue
 		} else {
 			console.log(this.name, " blocked");
-			this.colour = "grey";
+			this.motivation -= 5;
 		}
 
 		if (this.motivation < 50) {
@@ -25,12 +25,13 @@ function Engineer(){
 		}
 	}
 
-
 	this.draw = function(ctx, id, day){
-		ctx.fillStyle = this.colour;
-		ctx.beginPath();
-		ctx.arc(day*5, id*5, 2, 0 , Math.PI*2);ctx.fill();
-		ctx.closePath();		
+		if (this.motivation > 0) {
+			ctx.fillStyle = this.colour;
+			ctx.beginPath();
+			ctx.arc(day*5, id*5, 2, 0 , Math.PI*2);ctx.fill();
+			ctx.closePath();
+		}
 	}
 }
 
@@ -42,7 +43,7 @@ function Team(){
 }
 
 function Kanban(){
-	this.states = ["wishlist", "todo", "doing", "review", "done"];
+	this.states = ["wishlist", "todo", "doing", "review", "blocked", "done", "abandoned"];
 }
 
 function Scope(kanban){
@@ -61,6 +62,7 @@ function Issue(){
 	this.size = dice($('#scope'));
 	this.state = dice(1, 0, 1);
 	this.importance = dice(3, 1, 5);
+	this.engineer = -1;
 	console.log("Issue:", this.size, this.state, this.importance);
 }
 
@@ -72,6 +74,7 @@ function Project(p){
 
 	this.team = new Team();
 	this.total_days = $('#sprintsize').val() * $('#iterations').val();
+	console.log("total days", this.total_days, $('#sprintsize').val(), $('#iterations').val())
 	this.day = 0;
 
 	this.workaday = function(){
@@ -85,6 +88,12 @@ function Project(p){
 		for (e = 0; e < $('#teamsize').val(); e++) {
 			this.team.engineers[e].draw(ctx, e, this.day);
 		}
+		engineer = this.team.engineers[$('#engineer').val()];
+		document.getElementById("name").innerHTML = engineer.name;
+		document.getElementById("emotivation").innerHTML = engineer.motivation.toString();
+		document.getElementById("eaptitude").innerHTML = engineer.aptitude.toString();
+		document.getElementById("erelevance").innerHTML = engineer.relevance.toString();
+		document.getElementById("issues").innerHTML = engineer.issues.length.toString();
 	}
 };
 
@@ -142,6 +151,7 @@ function go(){
 //	curve (200, 1, 400);
 
 	project = new Project();
-	var timer = setInterval(function(){simulate(project, ctx)}, 50);
-	setTimeout(function(){clearInterval(timer)}, 50 * project.total_days);
+	wait_ms = 500
+	var timer = setInterval(function(){simulate(project, ctx)}, wait_ms);
+	setTimeout(function(){clearInterval(timer)}, wait_ms * project.total_days);
 }
