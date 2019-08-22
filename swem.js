@@ -41,29 +41,36 @@ function Team(){
 	}
 }
 
-function Scope(){
+function Kanban(){
+	this.states = ["wishlist", "todo", "doing", "review", "done"];
+}
+
+function Scope(kanban){
 	this.issues = [];
 	for (i = 0; i < $('#scope').val(); i++) {
 		this.issues[i] = new Issue();
-		document.getElementById("wishlist").innerHTML = i.toString();
+		state = kanban.states[this.issues[i].state];
+		console.log("state: ", this.state);
+		var count = parseInt(document.getElementById(state).innerHTML);
+		count += 1;
+		document.getElementById(state).innerHTML = count.toString();
 	}
 }
 
 function Issue(){
-	var State = Object.freeze({wishlist:1, todo:2, doing:3, review:4, done:5})
-	var Importance = Object.freeze({E:1, D:2, C:3, B:4, A:5})
 	this.size = dice($('#scope'));
-	this.state = State.wishlist;
+	this.state = dice(1, 0, 1);
 	this.importance = dice(3, 1, 5);
 	console.log("Issue:", this.size, this.state, this.importance);
 }
 
 function Project(p){
+	this.kanban = new Kanban();
+	this.scope = new Scope(this.kanban); // array of severity, size
 	this.uncertainty = $('#uncertainty').val();
 	this.lag = $('#lag').val();
 
 	this.team = new Team();
-	this.scope = new Scope(); // array of severity, size
 	this.total_days = $('#sprintsize').val() * $('#iterations').val();
 	this.day = 0;
 
@@ -125,7 +132,6 @@ function dice(peak, min=1, max=100) {
 	} else {
 		r = peak + (r - mid) * (max - peak)/(max - mid);
 	}
-
 	console.log("result", peak, min, max, Math.floor(r) + min);
 	return Math.floor(r);
 }
