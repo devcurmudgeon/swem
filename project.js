@@ -1,22 +1,37 @@
+_wishlist = 0;
+_todo = 1;
+_doing = 2;
+_review = 3;
+_blocked = 4;
+_done = 5;
+_abandoned = 6;
+
 function Issue(){
 	this.hours = dice($('#scope'));
 	this.state = dice(1, 0, 2);
 	this.importance = dice(3, 1, 5);
-	this.engineer = -1;
-	console.log("Issue:", this.hours, this.state, this.importance);
+	this.engineer = '';
 }
 
 function Kanban(){
 	this.states = ["wishlist", "todo", "doing", "review", "blocked", "done", "abandoned"];		
-
 	this.issues = [];
+
 	for (i = 0; i < $('#scope').val(); i++) {
 		this.issues[i] = new Issue();
-		state = this.states[this.issues[i].state];
-		console.log("state: ", this.state);
-		var count = parseInt(document.getElementById(state).innerHTML);
-		count += 1;
-		document.getElementById(state).innerHTML = count.toString();
+	}
+
+	this.totals = function (){
+		for (i = 0; i < this.states.length - 1; i++) {
+			state = this.states[i];
+			document.getElementById(state).innerHTML = "0";
+		}
+		for (i = 0; i < this.issues.length; i++) {
+			state = this.states[this.issues[i].state];
+			var count = parseInt(document.getElementById(state).innerHTML);
+			count += 1;
+			document.getElementById(state).innerHTML = count.toString();
+		}
 	}
 }
 
@@ -28,22 +43,25 @@ function Team(){
 }
 
 function Project(p){
+	this.day = 0;
 	this.kanban = new Kanban();
+	this.kanban.totals();
 	this.uncertainty = $('#uncertainty').val();
 	this.lag = $('#lag').val();
 
 	this.team = new Team();
 	this.total_days = $('#sprintsize').val() * $('#iterations').val();
 	console.log("total days", this.total_days, $('#sprintsize').val(), $('#iterations').val())
-	this.day = 0;
 
 	this.workaday = function(){
 		for (hour = 0; hour < 1; hour ++) {
 			for (e = 0; e < $('#teamsize').val(); e++) {
-				this.team.engineers[e].work();
+				this.team.engineers[e].work(this.kanban);
 			}
 		}
-		this.day++;
+		this.day += 1;
+		this.kanban.totals();
+		document.getElementById("day").innerHTML = this.day.toString();
 	}
 
 	this.draw = function(ctx){

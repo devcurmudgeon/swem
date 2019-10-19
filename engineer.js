@@ -1,4 +1,5 @@
 function Engineer(){
+	multitask_limit = 1;
 	this.name = Math.random().toString(36).substring(7);
 	this.relevance =  dice($('#relevance'));
 	this.aptitude = dice($('#aptitude'));
@@ -6,25 +7,45 @@ function Engineer(){
 	this.colour = "grey";
 	this.issues = [];
 
-	this.get_work = function(){
+	this.get_work = function(kanban){
 		// check issues, find something relevant, add it to list
-		console.log(this.name, "get_work")		
+		for (i = 0; i < kanban.issues.length; i++) {
+			if (this.issues.length < multitask_limit) {
+				if (kanban.issues[i].state == _todo) {
+					kanban.issues[i].engineer = this.name;
+					kanban.issues[i].state = _doing;
+					this.issues.push(i);
+				}
+			}
+		}
 	}
 
-	this.work = function(issue){
+	this.work = function(kanban){
 		if (this.issues.length != 0) {
 			// already have something to do
-			console.log(this.name, " busy");
 			this.colour = "darkgreen";
-			// adjust issue
+			id = this.issues.pop();
+			task = kanban.issues[id];
+
+			if (task.state == _doing) {
+				task.hours -= 1;
+				this.issues.push(id);
+			}
+			if (task.hours <= 0) {
+				task.state = _done;
+			}
+			kanban.issues[id] = task;
+
 		} else {
-			this.get_work();
-			console.log(this.name, " blocked");
-			this.motivation -= 5;
+			this.get_work(kanban);
 		}
 
 		if (this.motivation < 50) {
 			this.colour = "red";
+		}
+
+		if (this.motivation < 5) {
+			this.colour = "black";
 		}
 	}
 
