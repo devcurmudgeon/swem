@@ -1,3 +1,9 @@
+specification
+scope
+design
+requirements
+decomposition
+
 hmi
 gui
 network
@@ -37,6 +43,7 @@ reboot
 hang
 fail
 malfunction
+error
 
 intermittent
 1%

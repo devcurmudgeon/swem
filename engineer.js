@@ -3,7 +3,7 @@ function Engineer(){
 	this.name = Math.random().toString(36).substring(7);
 	this.relevance =  gauss($('#relevance'));
 	this.aptitude = gauss($('#aptitude'));
-	this.motivation = gauss(50);
+	this.motivation = 10 * gauss(50);
 	this.colour = "grey";
 	this.tasks = [];
 
@@ -15,8 +15,26 @@ function Engineer(){
 				if (kanban.issues[i].state == _todo) {
 					kanban.issues[i].engineer = this.name;
 					kanban.issues[i].state = _doing;
+					// exponential effect of ability on time required
+					console.log(this.name, this.aptitude, "gets job", i, kanban.issues[i].hours)
+					kanban.issues[i].hours *= (101 - this.aptitude)/50;
 					this.tasks.push(i);
-					this.motivate(10);
+					console.log(this.name, this.aptitude, "will do job", i, kanban.issues[i].hours)
+					// capable engineer is motivated by hard tasks
+					// less capable engeer is demotivated by hard tasks
+					// aptitude difficulty
+					// high     high        +ve
+					// low      high        -ve
+					// high     low         -ve
+					// low      low         +ve
+					difference = Math.abs(this.aptitude - kanban.issues[i].difficulty)
+					if (difference < 30) {
+						console.log("happy engineer", this.name, this.aptitude, kanban.issues[i].difficulty)
+						this.motivate(difference);
+					} else {
+						console.log("unhappy engineer", this.name, this.aptitude, kanban.issues[i].difficulty)
+						this.motivate(difference * -1);
+					}
 					break;
 				}
 			}
@@ -30,13 +48,15 @@ function Engineer(){
 
 			if (task.state == _doing) {
 				task.hours -= 1;
-				this.motivate(5);
+				// making progress motivates the engineer
+				this.motivate(+1);
 				this.tasks.push(id);
 			}
 
 			if (gauss() > 80) {
 				task.state = _blocked;
 				task.day = day;
+				// being blocked frustrates the engineer a lot
 				this.motivate(-10);
 //				console.log("block issue", id, kanban.day);
 			}
@@ -65,7 +85,7 @@ function Engineer(){
 		if (this.motivation < 20) {
 			this.colour = "red";
 		}
-		if (this.motivation < 10) {
+		if (this.motivation < 1) {
 			this.colour = "black";
 		}
 	}

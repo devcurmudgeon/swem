@@ -10,7 +10,7 @@ function slow() {
 	go(1000);
 }
 
-function go(wait_ms=5){
+function go(wait_ms=10){
 	timesheet = document.getElementById("timesheet").getContext("2d");
 	graphs = document.getElementById("graphs").getContext("2d");
 

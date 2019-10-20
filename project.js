@@ -23,10 +23,7 @@ function Project(p){
 
 		for (hour = 0; hour < 8; hour ++) {
 			for (e = 0; e < $('#teamsize').val(); e++) {
-				engineer = this.team.engineers[e];
-				if (engineer.motivation > 0) {
-					engineer.do_work(this.kanban, this.day);
-				}
+				this.team.engineers[e].do_work(this.kanban, this.day);
 			}
 		}
 
@@ -46,6 +43,7 @@ function Project(p){
 function Team(){
 	this.motivation = $('#motivation').val();
 	this.engineers = [];
+
 	for (i = 0; i < 100; i++) {
 		this.engineers[i] = new Engineer();
 	}

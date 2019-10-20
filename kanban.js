@@ -8,16 +8,17 @@ _released = 6;
 
 function Issue(hours){
 	this.hours = hours;
+	this.importance = gauss(3, 1, 5);
+	this.engineer = '';
+	this.difficulty = gauss();
+	this.day = 0;
+
 	if (hours > 8 * $('#task_size').val()) {
 		this.state = _wishlist;
 	}		
 	else {
 		this.state = _todo;
 	}
-
-	this.importance = gauss(3, 1, 5);
-	this.engineer = '';
-	this.day = 0;
 }
 
 function Kanban(){
