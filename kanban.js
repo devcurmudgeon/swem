@@ -36,7 +36,7 @@ function Kanban(){
 			document.getElementById(state).innerHTML = "0";
 		}
 
-		totals = [0,0,0,0,0,0,0];
+		var totals = [0,0,0,0,0,0,0];
 
 		for (i = 0; i < this.issues.length; i++) {
 //			console.log("kanban day issue", this.issues[i]);

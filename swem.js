@@ -10,11 +10,11 @@ function slow() {
 	go(1000);
 }
 
-function go(wait_ms=10){
+function go(wait_ms=30){
 	timesheet = document.getElementById("timesheet").getContext("2d");
 	graphs = document.getElementById("graphs").getContext("2d");
 
-	project = new Project();
+	var project = new Project();
 	var timer = setInterval(function(){simulate(project)}, wait_ms);
 	setTimeout(function(){clearInterval(timer)}, wait_ms * project.total_days);
 }

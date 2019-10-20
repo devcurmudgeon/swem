@@ -49,7 +49,7 @@ function Team(){
 	}
 
 	this.motivate = function(day){
-		change = $('#motivation').val() - this.motivation;
+		var change = $('#motivation').val() - this.motivation;
 		console.log("the beatings will continue...");
 		if (change != 0 && day % $('#release_cadence').val() == $('#lag').val()) {
 			console.log("until morale improves!!");
@@ -68,7 +68,7 @@ function Team(){
 			this.engineers[e].draw(timesheet, e, day);
 		}
 
-		engineer = this.engineers[$('#engineer').val()];
+		var engineer = this.engineers[$('#engineer').val()];
 		document.getElementById("name").innerHTML = engineer.name;
 		document.getElementById("emotivation").innerHTML = engineer.motivation.toString();
 		document.getElementById("tasks").innerHTML = engineer.tasks.toString();
