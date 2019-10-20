@@ -1,8 +1,7 @@
-SWEM
-====
+# SWEM (software engineering model)
 
-This small project aims to provide a visual aid to model how software project
-teams work.
+This small project aims to provide a visual aid for modeling how software
+project teams work. It's a work-in-progress.
 
 Obviously any attempt to model complex human interactions involves
 simplification. "All models are wrong". Even so, a model can help us to
@@ -15,14 +14,23 @@ following factors:
 [x] Team size
 [x] Release cadence
 [ ] Task planning size
-[ ] Task actual size
+[x] Task actual size
 [ ] Developer cycle time
 [ ] Integration cycle time
-[ ] Team motivation
+[x] Team motivation
 [ ] Delivery pressure
-[ ] Team aptitude
-[ ] Reviews
-[ ] Lag time to unblock
+[x] Team aptitude
+[x] Reviews
+[x] Lag time to unblock
 [ ] Dependency control
 [ ] Lines of code
-[ ] existing code reuse (including foss or 3rd party)
+[ ] Existing code reuse (including foss or 3rd party)
+
+# Getting Started
+
+Just load ./swem.html into a browser, click the buttons, move the sliders,
+rinse and repeat. Expect lots of bugs.
+
+# Contributing
+
+Bugs, patches and suggestions are all very welcome.
