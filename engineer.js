@@ -23,18 +23,10 @@ function Engineer(){
 		}
 	}
 
-	this.do_work = function(kanban){
+	this.do_work = function(kanban, day){
 		if (this.tasks.length != 0) {
-			// already have something to do
 			id = this.tasks.pop();
 			task = kanban.issues[id];
-
-			if (gauss() > 80) {
-				task.state = _blocked;
-				task.day = kanban.day;
-				this.motivate(-10);
-				console.log("block issue", id, kanban.day);
-			}
 
 			if (task.state == _doing) {
 				task.hours -= 1;
@@ -42,10 +34,17 @@ function Engineer(){
 				this.tasks.push(id);
 			}
 
+			if (gauss() > 80) {
+				task.state = _blocked;
+				task.day = day;
+				this.motivate(-10);
+//				console.log("block issue", id, kanban.day);
+			}
+
 			if (task.hours <= 0) {
 				task.state = _review;
+				task.day = day;
 				this.motivate(5);
-				this.tasks.push(id);
 			}
 
 			kanban.issues[id] = task;
@@ -71,12 +70,13 @@ function Engineer(){
 		}
 	}
 
-	this.draw = function(ctx, id, day){
+	this.draw = function(timesheet, id, day){
 		if (this.motivation > 0) {
-			ctx.fillStyle = this.colour;
-			ctx.beginPath();
-			ctx.arc(day*5, id*5, 2, 0 , Math.PI*2);ctx.fill();
-			ctx.closePath();
+			timesheet.fillStyle = this.colour;
+			timesheet.beginPath();
+			timesheet.arc(day*5, id*5, 2, 0 , Math.PI*2);
+			timesheet.fill();
+			timesheet.closePath();
 		}
 	}
 }

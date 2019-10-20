@@ -24,9 +24,9 @@
 
 	<table><tr>
 
-	<td valign="top"><button onclick="go()">Run</button></td>
+	<td valign="top"><button onclick="go()">Fast</button><br/><button onclick="slow()">Slow</button></td>
 
-	<td>
+	<td style="background-color: #eee;">
 		<input type="range" min="5" max="10000" value="10"oninput="updateRangeInput(this)">
 		<output id="scope" name="scope" for="scope">10</output>&nbsp Scope (effort days)
 		<br/>
@@ -35,11 +35,11 @@
 		<output id="teamsize" name="teamsize" for="teamsize">10</output>&nbsp Teamsize
 		<br/>
 
-		<input type="range" id="releases" name="releases" min="1" max="50" value="25" oninput="updateRangeInput(this)">
-		<output id="releases" name="releases" for="releases">25</output>&nbsp Releases
+		<input type="range" id="releases" name="releases" min="1" max="1500" value="40" oninput="updateRangeInput(this)">
+		<output id="releases" name="releases" for="releases">40</output>&nbsp Releases
 		<br/>
 
-		<input type="range" id="release_cadence" min="0" max="365" value="7" oninput="updateRangeInput(this)"/>
+		<input type="range" id="release_cadence" min="1" max="180" value="7" oninput="updateRangeInput(this)"/>
 		<output id="release_cadence" name="release_cadence" for="release_cadence">7</output>&nbsp Release Cadence (days)
 		<br/>
 	</td>
@@ -56,11 +56,11 @@
 		<output id="integration_cycle" name="integration_cycle" for="integration_cycle">1240</output>&nbsp Integration Cycle (minutes)
 		<br/>
 
-		<input type="range" id="lag" min="0" max="20" value="7" oninput="updateRangeInput(this)"/>
+		<input type="range" id="lag" min="1" max="20" value="7" oninput="updateRangeInput(this)"/>
 		<output id="lag" name="lag" for="lag">7</output>&nbsp Lag
 		<br/>
 	</td>
-	<td>
+	<td style="background-color: #eee;">
 		<input type="range" id="uncertainty" min="1" max="100" value="1" oninput="updateRangeInput(this)"/>
 		<output id="uncertainty" name="uncertainty" for="uncertainty">1</output>&nbsp Uncertainty
 		<br/>
@@ -79,7 +79,7 @@
     </td>
 
 	<td valign="top">
-		<table>
+		<table style="background-color: #ddd;">
 		<tr><td><b>Kanban</b></td><td>day:</td><td style="bold;" id="day">0</td></tr>
 		<tr>
 			<td><b>Wishlist</b></td>
@@ -110,7 +110,9 @@
   </tr>
 </table>
 
-	<canvas id="myCanvas" width="1600" height="500" style="border:2px solid #c303c3;">
+	<canvas id="timesheet" width="1600" height="500" style="border:2px solid #c303c3;">
+	</canvas>
+	<canvas id="graphs" width="1600" height="500" style="border:2px solid #c303c3;">
 	</canvas>
 
 </body>

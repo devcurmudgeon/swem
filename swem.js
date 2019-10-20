@@ -1,14 +1,20 @@
-function simulate(project, ctx){
+function simulate(project){
 	project.workaday();
+	released_per_day = parseInt($('#released').text()) / project.day;
+	project.plot(released_per_day * 10);
 }
 
-function go(){
-	ctx = document.getElementById("myCanvas").getContext("2d");
-	ctx.clearRect(0,0,1000,500);
-//	curve (200, 1, 400);
+function slow() {
+	graphs = document.getElementById("graphs").getContext("2d");
+	graphs.clearRect(0,0,1600,500);
+	go(1000);
+}
+
+function go(wait_ms=5){
+	timesheet = document.getElementById("timesheet").getContext("2d");
+	graphs = document.getElementById("graphs").getContext("2d");
 
 	project = new Project();
-	wait_ms = 500;
-	var timer = setInterval(function(){simulate(project, ctx)}, wait_ms);
+	var timer = setInterval(function(){simulate(project)}, wait_ms);
 	setTimeout(function(){clearInterval(timer)}, wait_ms * project.total_days);
 }

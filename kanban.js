@@ -38,6 +38,7 @@ function Kanban(){
 		totals = [0,0,0,0,0,0,0];
 
 		for (i = 0; i < this.issues.length; i++) {
+//			console.log("kanban day issue", this.issues[i]);
 			if ((this.issues[i].state == _blocked) && (this.issues[i].day + lag < day)) {
 				this.issues[i].state = _todo;
 				this.issues[i].day = day;
@@ -48,7 +49,6 @@ function Kanban(){
 			if ((this.issues[i].state == _review) && (this.issues[i].day + lag < day)) {
 				this.issues[i].state = _done;
 				this.issues[i].day = day;
-				this.issues[i].hours = $('#integration_cycle').val();
 			}
 
 			totals[this.issues[i].state] += 1;
@@ -57,7 +57,7 @@ function Kanban(){
 		if (day % $('#release_cadence').val() == 0) {
 			console.log("RELEASE DAY", day)
 			for (i = 0; i < this.issues.length; i++) {
-				if (this.issues[i].state == _done && this.issues[i].hours <= 0) {
+				if (this.issues[i].state == _done) {
 					this.issues[i].state = _released;
 					this.issues[i].day = day;
 					console.log("    release issue", i)

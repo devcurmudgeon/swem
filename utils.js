@@ -9,11 +9,11 @@ function curve(peak, min, max) {
 
 	for (i = min; i < max; i++) {
 //		console.log("graph", i, count[i]);
-		ctx.fillStyle = "green";
-		ctx.moveTo(500 + i*1,400);
-		ctx.lineTo(500 + i*1,400 - count[i]);
-		ctx.arc(500 + i*1,400 - count[i], 1, 0 , Math.PI*2);ctx.fill();
-		ctx.closePath();
+		timesheet.fillStyle = "green";
+		timesheet.moveTo(500 + i*1,400);
+		timesheet.lineTo(500 + i*1,400 - count[i]);
+		timesheet.arc(500 + i*1,400 - count[i], 1, 0 , Math.PI*2);timesheet.fill();
+		timesheet.closePath();
 	}
 }
 
