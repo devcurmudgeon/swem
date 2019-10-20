@@ -1,4 +1,5 @@
 function Project(p){
+	this.day = -1;
 	this.kanban = new Kanban();
 	this.uncertainty = $('#uncertainty').val();
 	this.lag = $('#lag').val();
@@ -7,7 +8,12 @@ function Project(p){
 	this.total_days = $('#release_cadence').val() * $('#releases').val();
 
 	this.workaday = function(){
-		this.team.motivate(this.kanban.day);
+		this.day += 1;
+		if (this.day % 7 == 5 || this.day % 7 == 6) {
+			return;
+		}
+
+		this.team.motivate(this.day);
 
 		for (hour = 0; hour < 8; hour ++) {
 			for (e = 0; e < $('#teamsize').val(); e++) {
@@ -18,8 +24,8 @@ function Project(p){
 			}
 		}
 
-		this.kanban.end_of_day($('#lag').val());
-		this.team.draw(ctx, this.kanban.day);
+		this.kanban.end_of_day(this.day, $('#lag').val());
+		this.team.draw(ctx, this.day);
 	}
 }
 

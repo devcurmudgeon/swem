@@ -23,15 +23,13 @@ function Issue(hours){
 function Kanban(){
 	this.states = ["wishlist", "todo", "blocked", "doing", "review", "done", "released"];		
 	this.issues = [];
-	this.day = 0;
 
 	for (i = 0; i < $('#scope').val(); i++) {
 		this.issues[i] = new Issue(8);
 	}
 
-	this.end_of_day = function (lag){
-		this.day += 1;
-		document.getElementById("day").innerHTML = this.day.toString();
+	this.end_of_day = function (day, lag){
+		document.getElementById("day").innerHTML = day.toString();
 		for (i = 0; i < this.states.length - 1; i++) {
 			state = this.states[i];
 			document.getElementById(state).innerHTML = "0";
@@ -40,28 +38,28 @@ function Kanban(){
 		totals = [0,0,0,0,0,0,0];
 
 		for (i = 0; i < this.issues.length; i++) {
-			if ((this.issues[i].state == _blocked) && (this.issues[i].day + lag < this.day)) {
+			if ((this.issues[i].state == _blocked) && (this.issues[i].day + lag < day)) {
 				this.issues[i].state = _todo;
-				this.issues[i].day = this.day;
+				this.issues[i].day = day;
 				this.issues[i].engineer = '';
 				console.log("unblock issue", i, this.day);
 			}
 
-			if ((this.issues[i].state == _review) && (this.issues[i].day + lag < this.day)) {
+			if ((this.issues[i].state == _review) && (this.issues[i].day + lag < day)) {
 				this.issues[i].state = _done;
-				this.issues[i].day = this.day;
+				this.issues[i].day = day;
 				this.issues[i].hours = $('#integration_cycle').val();
 			}
 
 			totals[this.issues[i].state] += 1;
 		}
 
-		if (this.day % $('#release_cadence').val() == 0) {
-			console.log("RELEASE DAY", this.day)
+		if (day % $('#release_cadence').val() == 0) {
+			console.log("RELEASE DAY", day)
 			for (i = 0; i < this.issues.length; i++) {
 				if (this.issues[i].state == _done && this.issues[i].hours <= 0) {
 					this.issues[i].state = _released;
-					this.issues[i].day = this.day;
+					this.issues[i].day = day;
 					console.log("    release issue", i)
 				}
 			}
