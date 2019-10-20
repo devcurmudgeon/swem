@@ -32,7 +32,7 @@ function Kanban(){
 		this.issues[i] = new Issue(8);
 	}
 
-	this.end_of_day = function (day, lag){
+	this.end_of_day = function (day){
 		for (i = 0; i < this.states.length - 1; i++) {
 			state = this.states[i];
 			document.getElementById(state).innerHTML = "0";
@@ -42,14 +42,14 @@ function Kanban(){
 
 		for (i = 0; i < this.issues.length; i++) {
 //			console.log("kanban day issue", this.issues[i]);
-			if ((this.issues[i].state == _blocked) && (this.issues[i].day + lag < day)) {
+			if ((this.issues[i].state == _blocked) && (this.issues[i].day <= day)) {
 				this.issues[i].state = _todo;
 				this.issues[i].day = day;
 				this.issues[i].engineer = '';
-				console.log("unblock issue", i, this.day);
+				console.log("unblock issue", i, day);
 			}
 
-			if ((this.issues[i].state == _review) && (this.issues[i].day + lag < day)) {
+			if ((this.issues[i].state == _review) && (this.issues[i].day <= day)) {
 				this.issues[i].state = _done;
 				this.issues[i].day = day;
 			}
@@ -74,7 +74,7 @@ function Kanban(){
 		document.getElementById("day").innerHTML = day.toString();
 		document.getElementById("cost").innerHTML = parseInt(this.cost).toString();
 
-		console.log("ratio",this.cost, totals[_released])
+		console.log("ratio", this.cost, totals[_released])
 		this.ratio = parseInt(this.cost / totals[_released]);
 
 		document.getElementById("ratio").innerHTML = this.ratio.toString();

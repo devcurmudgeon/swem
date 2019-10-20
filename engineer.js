@@ -3,7 +3,7 @@ function Engineer(){
 	this.name = Math.random().toString(36).substring(7);
 	this.relevance =  gauss($('#relevance'));
 	this.aptitude = gauss($('#aptitude'));
-	this.motivation = 10 * gauss(50);
+	this.motivation = gauss(50);
 	this.colour = "grey";
 	this.tasks = [];
 
@@ -61,7 +61,7 @@ function Engineer(){
 
 			if (gauss() > 80) {
 				task.state = _blocked;
-				task.day = day;
+				task.day = day + $('#lag').val() * gauss()/100;
 				// being blocked frustrates the engineer a lot
 				this.motivate(-10);
 //				console.log("block issue", id, kanban.day);
@@ -69,7 +69,7 @@ function Engineer(){
 
 			if (task.hours <= 0) {
 				task.state = _review;
-				task.day = day;
+				task.day = day + $('#lag').val() * gauss()/100;
 				this.motivate(5);
 			}
 
@@ -77,6 +77,9 @@ function Engineer(){
 
 		} else {
 			this.get_work(kanban);
+			if (this.tasks.length == 0) {
+				this.motivation = -1; // no work to do, so stop
+			}
 		}
 	}
 
