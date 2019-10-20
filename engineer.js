@@ -42,6 +42,12 @@ function Engineer(){
 	}
 
 	this.do_work = function(kanban, day){
+		if (this.motivation < 0) {
+			return;
+		}
+
+		kanban.cost += 1 * kanban.hourly_rate;
+
 		if (this.tasks.length != 0) {
 			id = this.tasks.pop();
 			task = kanban.issues[id];
@@ -85,13 +91,13 @@ function Engineer(){
 		if (this.motivation < 20) {
 			this.colour = "red";
 		}
-		if (this.motivation < 1) {
+		if (this.motivation < 5) {
 			this.colour = "black";
 		}
 	}
 
 	this.draw = function(timesheet, id, day){
-		if (this.motivation > 0) {
+		if (this.motivation >= 0) {
 			timesheet.fillStyle = this.colour;
 			timesheet.beginPath();
 			timesheet.arc(day*5, id*5, 2, 0 , Math.PI*2);

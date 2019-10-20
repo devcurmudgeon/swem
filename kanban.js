@@ -24,13 +24,15 @@ function Issue(hours){
 function Kanban(){
 	this.states = ["wishlist", "todo", "blocked", "doing", "review", "done", "released"];		
 	this.issues = [];
+	this.cost = 0;
+	this.hourly_rate = 0.100; // in thousands
+	this.ratio = 0;
 
 	for (i = 0; i < $('#scope').val(); i++) {
 		this.issues[i] = new Issue(8);
 	}
 
 	this.end_of_day = function (day, lag){
-		document.getElementById("day").innerHTML = day.toString();
 		for (i = 0; i < this.states.length - 1; i++) {
 			state = this.states[i];
 			document.getElementById(state).innerHTML = "0";
@@ -69,5 +71,12 @@ function Kanban(){
 		for (i = 0; i < totals.length; i++) {
 			document.getElementById(this.states[i]).innerHTML = totals[i].toString();			
 		}
+		document.getElementById("day").innerHTML = day.toString();
+		document.getElementById("cost").innerHTML = parseInt(this.cost).toString();
+
+		console.log("ratio",this.cost, totals[_released])
+		this.ratio = parseInt(this.cost / totals[_released]);
+
+		document.getElementById("ratio").innerHTML = this.ratio.toString();
 	}
 }
