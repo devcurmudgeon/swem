@@ -35,7 +35,7 @@ function Project(p){
 	this.plot = function (value) {
 		graphs.fillStyle = this.colour;
 		graphs.beginPath();
-		graphs.arc(this.day * 5 % 1600, 250 - (value * 2), 4, 0 , Math.PI*2);
+		graphs.arc(this.day * 5 % 1600, 500 - (value * 2), 4, 0 , Math.PI*2);
 		graphs.fill();
 		graphs.closePath();
 	}
