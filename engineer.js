@@ -53,8 +53,11 @@ function Engineer(){
 			task = kanban.issues[id];
 
 			if (task.state == _doing) {
+				var waste = $('#developer_cycle').val() * gauss() / 50;
+				waste = (waste % 60 )/ 60;
 				task.hours -= 1;
-				// making progress motivates the engineer
+				task.hours += waste;
+				// making progress pleases the engineer
 				this.motivate(+1);
 				this.tasks.push(id);
 			}
