@@ -18,6 +18,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	<script src="swem.js"></script>
 	<script src="engineer.js"></script>
+	<script src="kanban.js"></script>
 	<script src="project.js"></script>
 	<script src="utils.js"></script>
 
@@ -26,31 +27,27 @@
 	<td valign="top"><button onclick="go()">Run</button></td>
 
 	<td>
-		<input type="range" min="5" max="100" value="10"oninput="updateRangeInput(this)">
-		<output id="scope" name="scope" for="scope">10</output>&nbsp Scope
+		<input type="range" min="5" max="10000" value="10"oninput="updateRangeInput(this)">
+		<output id="scope" name="scope" for="scope">10</output>&nbsp Scope (effort days)
 		<br/>
 
-		<input type="range" id="iterations" name="iterations" min="1" max="20" value="1" oninput="updateRangeInput(this)">
-		<output id="iterations" name="iterations" for="iterations">1</output>&nbsp Iterations
+		<input type="range" id="teamsize" min="1" max="100" value="10" oninput="updateRangeInput(this)"/>
+		<output id="teamsize" name="teamsize" for="teamsize">10</output>&nbsp Teamsize
 		<br/>
 
-		<input type="range" id="teamsize" min="1" max="100" value="6" oninput="updateRangeInput(this)"/>
-		<output id="teamsize" name="teamsize" for="teamsize">6</output>&nbsp Teamsize
-		<br/>
-
-		<input type="range" id="sprintsize" min="1" max="350" value="20" oninput="updateRangeInput(this)"/>
-		<output id="sprintsize" name="sprintsize" for="sprintsize">20</output>&nbsp Sprintsize (days)
+		<input type="range" id="releases" name="releases" min="1" max="50" value="25" oninput="updateRangeInput(this)">
+		<output id="releases" name="releases" for="releases">25</output>&nbsp Releases
 		<br/>
 
 		<input type="range" id="release_cadence" min="0" max="365" value="7" oninput="updateRangeInput(this)"/>
 		<output id="release_cadence" name="release_cadence" for="release_cadence">7</output>&nbsp Release Cadence (days)
 		<br/>
-
-		<input type="range" id="lag" min="0" max="20" value="1" oninput="updateRangeInput(this)"/>
-		<output id="lag" name="lag" for="lag">0</output>&nbsp Lag
-		<br/>
-    </td>
+	</td>
 	<td>
+		<input type="range" id="task_size" min="1" max="90" value="1" oninput="updateRangeInput(this)"/>
+		<output id="task_size" name="task_size" for="task_size">1</output>&nbsp Task Size (days)
+		<br/>
+
 		<input type="range" id="developer_cycle" min="0" max="1240" value="60" oninput="updateRangeInput(this)"/>
 		<output id="developer_cycle" name="developer_cycle" for="developer_cycle">60</output>&nbsp Developer Cycle (minutes)
 		<br/>
@@ -59,50 +56,55 @@
 		<output id="integration_cycle" name="integration_cycle" for="integration_cycle">1240</output>&nbsp Integration Cycle (minutes)
 		<br/>
 
-		<input type="range" id="motivation" min="1" max="100" value="50" oninput="updateRangeInput(this)"/>
-		<output id="teamsize" name="motivation" for="motivation">50</output>&nbsp Motivation
+		<input type="range" id="lag" min="0" max="20" value="7" oninput="updateRangeInput(this)"/>
+		<output id="lag" name="lag" for="lag">7</output>&nbsp Lag
 		<br/>
-
-		<input type="range" id="relevance" min="1" max="100" value="1" oninput="updateRangeInput(this)"/>
-		<output id="teamsize" name="relevance" for="relevance">1</output>&nbsp Relevance
-		<br/>
-
-		<input type="range" id="aptitude" min="1" max="100" value="1" oninput="updateRangeInput(this)"/>
-		<output id="teamsize" name="aptitude" for="aptitude">1</output>&nbsp Aptitude
-		<br/>
-
+	</td>
+	<td>
 		<input type="range" id="uncertainty" min="1" max="100" value="1" oninput="updateRangeInput(this)"/>
 		<output id="uncertainty" name="uncertainty" for="uncertainty">1</output>&nbsp Uncertainty
 		<br/>
-	</td>
+
+		<input type="range" id="motivation" min="1" max="100" value="1" oninput="updateRangeInput(this)"/>
+		<output id="motivation" name="motivation" for="motivation">1</output>&nbsp Motivation
+		<br/>
+
+		<input type="range" id="relevance" min="1" max="100" value="1" oninput="updateRangeInput(this)"/>
+		<output id="relevance" name="relevance" for="relevance">1</output>&nbsp Relevance
+		<br/>
+
+		<input type="range" id="aptitude" min="1" max="100" value="1" oninput="updateRangeInput(this)"/>
+		<output id="aptitude" name="aptitude" for="aptitude">1</output>&nbsp Aptitude
+		<br/>
+    </td>
 
 	<td valign="top">
 		<table>
-		<tr><td>Kanban</td><td id="day">0</td></tr>
+		<tr><td><b>Kanban</b></td><td>day:</td><td style="bold;" id="day">0</td></tr>
 		<tr>
-			<td>Wishlist</td>
-			<td>Todo</td>
-			<td>Doing</td>
-			<td>Review</td>
-			<td>Blocked</td>
-			<td>Done</td>
+			<td><b>Wishlist</b></td>
+			<td><b>Todo</b></td>
+			<td><b>Blocked</b></td>
+			<td><b>Doing</b></td>
+			<td><b>Review</b></td>
+			<td><b>Done</b></td>
+			<td><b>Released</b></td>
 		</tr>
 		<tr>
 			<td id="wishlist">0</td>
 			<td id="todo">0</td>
+			<td id="blocked" style="background-color: #ec8f8f;">0</td>
 			<td id="doing">0</td>
 			<td id="review">0</td>
-			<td id="blocked">0</td>
 			<td id="done">0</td>
+			<td id="released" style="background-color: #41e20c;">0</td>
 		</table>
 	</td>
 	<td valign="top">
-		<table><tr>Engineer: <input id="engineer" value=0></tr>
-			<tr><td>Name: <var id="name">....</var></td></tr>
-			<tr><td>Issues: <var id="issues">0</var></td></tr>
+		<table>
+			<tr><td>Engineer: <var id="name">....</var></td><td><input size="3" id="engineer" value=0></td></tr>
+			<tr><td>Tasks: <var id="tasks">0</var></td></tr>
 			<tr><td>Motivation: <var id="emotivation">0</var></td></tr>
-			<tr><td>Aptitude: <var id="eaptitude">0</var></td></tr>
-			<tr><td>Relevance: <var id="erelevance">0</var></td></tr>
 		</table>
 	</td>
   </tr>

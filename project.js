@@ -1,78 +1,58 @@
-_wishlist = 0;
-_todo = 1;
-_doing = 2;
-_review = 3;
-_blocked = 4;
-_done = 5;
-_abandoned = 6;
-
-function Issue(){
-	this.hours = dice($('#scope'));
-	this.state = dice(1, 0, 2);
-	this.importance = dice(3, 1, 5);
-	this.engineer = '';
-}
-
-function Kanban(){
-	this.states = ["wishlist", "todo", "doing", "review", "blocked", "done", "abandoned"];		
-	this.issues = [];
-
-	for (i = 0; i < $('#scope').val(); i++) {
-		this.issues[i] = new Issue();
-	}
-
-	this.totals = function (){
-		for (i = 0; i < this.states.length - 1; i++) {
-			state = this.states[i];
-			document.getElementById(state).innerHTML = "0";
-		}
-		for (i = 0; i < this.issues.length; i++) {
-			state = this.states[this.issues[i].state];
-			var count = parseInt(document.getElementById(state).innerHTML);
-			count += 1;
-			document.getElementById(state).innerHTML = count.toString();
-		}
-	}
-}
-
-function Team(){
-	this.engineers = [];
-	for (i = 0; i < $('#teamsize').val(); i++) {
-		this.engineers[i] = new Engineer();
-	}
-}
-
 function Project(p){
-	this.day = 0;
 	this.kanban = new Kanban();
-	this.kanban.totals();
 	this.uncertainty = $('#uncertainty').val();
 	this.lag = $('#lag').val();
 
 	this.team = new Team();
-	this.total_days = $('#sprintsize').val() * $('#iterations').val();
-	console.log("total days", this.total_days, $('#sprintsize').val(), $('#iterations').val())
+	this.total_days = $('#release_cadence').val() * $('#releases').val();
 
 	this.workaday = function(){
-		for (hour = 0; hour < 1; hour ++) {
+		this.team.motivate(this.kanban.day);
+
+		for (hour = 0; hour < 8; hour ++) {
 			for (e = 0; e < $('#teamsize').val(); e++) {
-				this.team.engineers[e].work(this.kanban);
+				engineer = this.team.engineers[e];
+				if (engineer.motivation > 0) {
+					engineer.do_work(this.kanban);
+				}
 			}
 		}
-		this.day += 1;
-		this.kanban.totals();
-		document.getElementById("day").innerHTML = this.day.toString();
+
+		this.kanban.end_of_day($('#lag').val());
+		this.team.draw(ctx, this.kanban.day);
+	}
+}
+
+function Team(){
+	this.motivation = $('#motivation').val();
+	this.engineers = [];
+	for (i = 0; i < 100; i++) {
+		this.engineers[i] = new Engineer();
 	}
 
-	this.draw = function(ctx){
-		for (e = 0; e < $('#teamsize').val(); e++) {
-			this.team.engineers[e].draw(ctx, e, this.day);
+	this.motivate = function(day){
+		change = $('#motivation').val() - this.motivation;
+		console.log("the beatings will continue...");
+		if (change != 0 && day % $('#release_cadence').val() == $('#lag').val()) {
+			console.log("until morale improves!!");
+			for (i = 0; i < $('#teamsize').val(); i++) {
+				if (this.engineers[i].motivation > 0) {
+					this.engineers[i].motivation += change;
+					console.log(change, this.engineers[i].name, this.engineers[i].motivation);
+				}
+			}
+			this.motivation = $('#motivation').val();
 		}
-		engineer = this.team.engineers[$('#engineer').val()];
+	}
+
+	this.draw = function(ctx, day){
+		for (e = 0; e < $('#teamsize').val(); e++) {
+			this.engineers[e].draw(ctx, e, day);
+		}
+
+		engineer = this.engineers[$('#engineer').val()];
 		document.getElementById("name").innerHTML = engineer.name;
 		document.getElementById("emotivation").innerHTML = engineer.motivation.toString();
-		document.getElementById("eaptitude").innerHTML = engineer.aptitude.toString();
-		document.getElementById("erelevance").innerHTML = engineer.relevance.toString();
-		document.getElementById("issues").innerHTML = engineer.issues.length.toString();
+		document.getElementById("tasks").innerHTML = engineer.tasks.toString();
 	}
 }

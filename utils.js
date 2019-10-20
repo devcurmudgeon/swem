@@ -3,7 +3,7 @@ function updateRangeInput(elem) {$(elem).next().val($(elem).val());}
 function curve(peak, min, max) {
 	count = new Array(max).fill(0);
 	for (i = 0; i < 5000; i++) {
-		count[dice(peak, min, max)] += 1;
+		count[gauss(peak, min, max)] += 1;
 	}
 	console.log("min-max", count[min + 2], count[max - 2])
 
@@ -17,7 +17,7 @@ function curve(peak, min, max) {
 	}
 }
 
-function dice(peak, min=1, max=100) {
+function gauss(peak=50, min=1, max=100) {
 	// generates a random integer in approximate bell curve around value
 	if (typeof peak != 'number') {
 		peak = parseInt(peak.val());
@@ -37,6 +37,6 @@ function dice(peak, min=1, max=100) {
 	} else {
 		r = peak + (r - mid) * (max - peak)/(max - mid);
 	}
-	console.log("result", peak, min, max, Math.floor(r) + min);
+//	console.log("result", peak, min, max, Math.floor(r) + min);
 	return Math.floor(r);
 }
