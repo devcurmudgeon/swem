@@ -10,6 +10,8 @@ function Project(p){
 	console.log("total days", this.total_days);
 
 	this.workaday = function(){
+		var working = false;
+
 		if (this.day % 320 == 0) {
 			timesheet.clearRect(0,0,1600,500);
 		}
@@ -24,12 +26,19 @@ function Project(p){
 		for (hour = 0; hour < 8; hour ++) {
 			for (e = 0; e < $('#teamsize').val(); e++) {
 				this.team.engineers[e].do_work(this.kanban, this.day);
+				if (this.team.engineers[e].motivation > 0) {
+					working = true;
+				}
 			}
+		}
+		if (working == false) {
+			return;
 		}
 
 		this.kanban.end_of_day(this.day, $('#lag').val());
 
 		this.team.draw(timesheet, this.day % 320);
+		return working;
 	}
 
 	this.plot = function (value) {
