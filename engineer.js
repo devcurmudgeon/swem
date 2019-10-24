@@ -115,7 +115,7 @@ function Engineer(){
 		if (this.motivation >= 0) {
 			timesheet.fillStyle = this.colour;
 			timesheet.beginPath();
-			timesheet.arc(day * $('#scale').val(), id * $('#scale').val() + 2, $('#scale').val() * .4, 0 , Math.PI*2);
+			timesheet.arc(day * $('#scale').val(), id * $('#scale').val() + 5, $('#scale').val() * .4, 0 , Math.PI*2);
 			timesheet.fill();
 			timesheet.closePath();
 		}
