@@ -71,7 +71,11 @@ function Engineer(){
 			}
 
 			if (task.hours <= 0) {
-				task.state = _review;
+				if ($('#teamsize').val() > 1) {
+					task.state = _review;
+				} else {
+					task.state = _done;
+				}
 				task.day = day + $('#lag').val() * gauss()/100;
 				this.motivate(5);
 			}
