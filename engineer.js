@@ -1,5 +1,4 @@
 function Engineer(){
-	multitask_limit = 3;
 	this.name = Math.random().toString(36).substring(7);
 	this.relevance =  gauss($('#relevance'));
 	this.aptitude = gauss($('#aptitude'));
@@ -9,7 +8,7 @@ function Engineer(){
 
 	this.get_work = function(kanban){
 		// check issues, find something relevant, add it to list
-		if (this.tasks.length < multitask_limit) {
+		if (this.tasks.length < $('#multitask').val()) {
 			this.motivate(-1);
 			for (i = 0; i < kanban.issues.length; i++) {
 				if (kanban.issues[i].state == _todo) {
@@ -52,6 +51,15 @@ function Engineer(){
 			id = this.tasks.pop();
 			task = kanban.issues[id];
 
+			if (gauss() < $('#uncertainty').val() * .6) {
+				task.state = _blocked;
+				task.day = day + $('#lag').val() * gauss()/100;
+				// being blocked frustrates the engineer a lot
+				this.motivate(-5);
+				this.tasks.push(id);
+				this.get_work(kanban);
+//				console.log("block issue", id, kanban.day);
+			}
 			if (task.state == _doing) {
 				var waste = $('#developer_cycle').val() * gauss() / 50;
 				waste = (waste % 60 )/ 60;
@@ -60,14 +68,6 @@ function Engineer(){
 				// making progress pleases the engineer
 				this.motivate(+1);
 				this.tasks.push(id);
-			}
-
-			if (gauss() < $('#uncertainty').val() * .6) {
-				task.state = _blocked;
-				task.day = day + $('#lag').val() * gauss()/100;
-				// being blocked frustrates the engineer a lot
-				this.motivate(-10);
-//				console.log("block issue", id, kanban.day);
 			}
 
 			if (task.hours <= 0) {

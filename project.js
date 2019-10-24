@@ -12,7 +12,7 @@ function Project(p){
 
 	this.workaday = function(){
 
-		if (this.day % 320 == 0) {
+		if (this.day % (1600 / $('#scale').val() ) == 0) {
 			timesheet.clearRect(0,0,1600,500);
 		}
 
@@ -38,7 +38,7 @@ function Project(p){
 
 		this.kanban.end_of_day(this.day, $('#lag').val());
 
-		this.team.draw(timesheet, this.day % 320);
+		this.team.draw(timesheet, this.day % (1600 / $('#scale').val()));
 	}
 
 	this.plot = function (value) {
