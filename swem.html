@@ -24,7 +24,11 @@
 
 	<table><tr>
 
-	<td valign="top"><button onclick="go()">Fast</button><br/><button onclick="slow()">Slow</button></td>
+	<td valign="top">
+		<button onclick="go()">Fast</button><br/>
+		<button onclick="slow()">Slow</button><br/>
+		Scale<br/><input size="3" id="scale" value=1.0>
+	</td>
 
 	<td style="background-color: #eee;">
 		<input type="range" min="5" max="10000" value="100"oninput="updateRangeInput(this)">
@@ -53,7 +57,7 @@
 		<br/>
 
 		<input type="range" id="developer_cycle" min="1" max="59" value="20" oninput="updateRangeInput(this)"/>
-		<output id="developer_cycle" name="developer_cycle" for="developer_cycle">60</output>&nbsp Developer Cycle (mins)
+		<output id="developer_cycle" name="developer_cycle" for="developer_cycle">20</output>&nbsp Developer Cycle (mins)
 		<br/>
 
 		<input type="range" id="integration_cycle" min="10" max="4320" value="1240" oninput="updateRangeInput(this)"/>
