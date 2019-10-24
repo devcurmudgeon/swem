@@ -73,11 +73,14 @@ function Team(){
 	}
 
 	this.draw = function(timesheet, day){
+		var engineer = new Engineer();
 		for (e = 0; e < $('#teamsize').val(); e++) {
 			this.engineers[e].draw(timesheet, e, day);
+			if (engineer.motivation < this.engineers[e].motivation) {
+				engineer = this.engineers[e];
+			}
 		}
 
-		var engineer = this.engineers[$('#engineer').val()];
 		document.getElementById("name").innerHTML = engineer.name;
 		document.getElementById("emotivation").innerHTML = engineer.motivation.toString();
 		document.getElementById("tasks").innerHTML = engineer.tasks.toString();
