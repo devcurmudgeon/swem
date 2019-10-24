@@ -91,7 +91,7 @@ function Engineer(){
 
 		this.colour = "grey";
 
-		if (this.motivation > 150) {
+		if (this.motivation > 250) {
 			this.colour = "green";
 		}
 
