@@ -29,7 +29,7 @@ function Kanban(){
 	this.ratio = 0;
 
 	for (i = 0; i < $('#scope').val(); i++) {
-		this.issues[i] = new Issue(8);
+		this.issues[i] = new Issue($('#task_size').val() * 8 * gauss() / 100);
 	}
 
 	this.end_of_day = function (day){
