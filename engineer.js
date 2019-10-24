@@ -5,6 +5,7 @@ function Engineer(){
 	this.motivation = gauss(50);
 	this.colour = "grey";
 	this.tasks = [];
+	this.spinup_days = 20 - (this.relevance / 5);
 
 	this.get_work = function(kanban){
 		// check issues, find something relevant, add it to list
@@ -63,6 +64,9 @@ function Engineer(){
 			if (task.state == _doing) {
 				var waste = $('#developer_cycle').val() * gauss() / 50;
 				waste = (waste % 60 )/ 60;
+				if (this.spinup_days > day) {
+					waste += .5;
+				}
 				task.hours -= 1;
 				task.hours += waste;
 				// making progress pleases the engineer
