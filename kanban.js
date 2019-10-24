@@ -75,7 +75,7 @@ function Kanban(){
 		document.getElementById("cost").innerHTML = parseInt(this.cost).toString();
 
 		console.log("ratio", this.cost, totals[_released])
-		this.ratio = parseInt(this.cost / totals[_released]);
+		this.ratio = parseInt(this.cost * 1000 / totals[_released]);
 
 		document.getElementById("ratio").innerHTML = this.ratio.toString();
 	}
