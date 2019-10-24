@@ -1,7 +1,9 @@
 function simulate(project){
-	project.workaday();
-	released_per_day = parseInt($('#released').text()) / project.day;
-	project.plot(released_per_day * $('#scale').val());
+	if (!project.stop) {
+		project.workaday();
+		released_per_day = parseInt($('#released').text()) / project.day;
+		project.plot(released_per_day * $('#scale').val());
+	}
 }
 
 function slow() {

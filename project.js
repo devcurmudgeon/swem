@@ -4,13 +4,13 @@ function Project(p){
 	this.kanban = new Kanban();
 	this.uncertainty = $('#uncertainty').val();
 	this.lag = $('#lag').val();
+	this.stop = false;
 
 	this.team = new Team();
 	this.total_days = $('#release_cadence').val() * $('#releases').val();
 	console.log("total days", this.total_days);
 
 	this.workaday = function(){
-		var working = false;
 
 		if (this.day % 320 == 0) {
 			timesheet.clearRect(0,0,1600,500);
@@ -23,28 +23,28 @@ function Project(p){
 
 		this.team.motivate(this.day);
 
+		this.stop = true;
 		for (hour = 0; hour < 8; hour ++) {
 			for (e = 0; e < $('#teamsize').val(); e++) {
 				this.team.engineers[e].do_work(this.kanban, this.day);
 				if (this.team.engineers[e].motivation > 0) {
-					working = true;
+					this.stop = false;
 				}
 			}
 		}
-		if (working == false) {
+		if (this.stop) {
 			return;
 		}
 
 		this.kanban.end_of_day(this.day, $('#lag').val());
 
 		this.team.draw(timesheet, this.day % 320);
-		return working;
 	}
 
 	this.plot = function (value) {
 		graphs.fillStyle = this.colour;
 		graphs.beginPath();
-		graphs.arc(this.day * 5 % 1600, 500 - (value * 2), 4, 0 , Math.PI*2);
+		graphs.arc(this.day * $('#scale').val() % 1600, 500 - (value * 2), 4, 0 , Math.PI*2);
 		graphs.fill();
 		graphs.closePath();
 	}

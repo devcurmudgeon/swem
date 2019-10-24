@@ -81,23 +81,24 @@ function Engineer(){
 		} else {
 			this.get_work(kanban);
 			if (this.tasks.length == 0) {
-				this.motivation = -1; // no work to do, so stop
+				this.motivation -= 1; // no work to do
 			}
 		}
 	}
 
 	this.motivate = function(change){
-		this.colour = "grey";
 		this.motivation += change;
 
-		if (this.motivation > 60) {
+		this.colour = "grey";
+
+		if (this.motivation > 150) {
 			this.colour = "green";
 		}
 
-		if (this.motivation < 20) {
+		if (this.motivation < 50) {
 			this.colour = "red";
 		}
-		if (this.motivation < 5) {
+		if (this.motivation < 20) {
 			this.colour = "black";
 		}
 	}
@@ -106,7 +107,7 @@ function Engineer(){
 		if (this.motivation >= 0) {
 			timesheet.fillStyle = this.colour;
 			timesheet.beginPath();
-			timesheet.arc(day*5, id*5, 2, 0 , Math.PI*2);
+			timesheet.arc(day * $('#scale').val(), id * $('#scale').val() + 2, $('#scale').val() * .4, 0 , Math.PI*2);
 			timesheet.fill();
 			timesheet.closePath();
 		}

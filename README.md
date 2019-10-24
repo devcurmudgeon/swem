@@ -10,7 +10,7 @@ understand complex emergent behaviours.
 This model could ultimately aim to take into account some or all of the
 following factors:
 
-- [x] Scope of project in effort days
+- [x] Scope of project in engineer days
 - [x] Team size
 - [x] Release cadence
 - [ ] Task planning size

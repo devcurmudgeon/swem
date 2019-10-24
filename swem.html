@@ -27,12 +27,12 @@
 	<td valign="top">
 		<button onclick="go()">Fast</button><br/>
 		<button onclick="slow()">Slow</button><br/>
-		Scale<br/><input size="3" id="scale" value=1.0>
+		Scale<br/><input size="3" id="scale" value=10.0>
 	</td>
 
 	<td style="background-color: #eee;">
 		<input type="range" min="5" max="10000" value="100"oninput="updateRangeInput(this)">
-		<output id="scope" name="scope" for="scope">100</output>&nbsp Scope (effort days)
+		<output id="scope" name="scope" for="scope">100</output>&nbsp Scope (engineer days)
 		<br/>
 
 		<input type="range" id="teamsize" min="1" max="100" value="10" oninput="updateRangeInput(this)"/>
