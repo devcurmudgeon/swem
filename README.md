@@ -13,6 +13,7 @@ following factors:
 - [x] Scope of project in engineer days
 - [x] Team size
 - [x] Release cadence
+- [x] Uncertainty
 - [ ] Task planning size
 - [x] Task actual size
 - [ ] Developer cycle time

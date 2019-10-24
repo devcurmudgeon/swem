@@ -62,7 +62,7 @@ function Engineer(){
 				this.tasks.push(id);
 			}
 
-			if (gauss() > 80) {
+			if (gauss() < $('#uncertainty').val() * .6) {
 				task.state = _blocked;
 				task.day = day + $('#lag').val() * gauss()/100;
 				// being blocked frustrates the engineer a lot
