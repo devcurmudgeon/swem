@@ -10,7 +10,7 @@ function Engineer(){
 	this.get_work = function(kanban){
 		// check issues, find something relevant, add it to list
 		if (this.tasks.length < $('#multitask').val()) {
-			this.motivate(-1);
+			this.motivate(-2);
 			for (i = 0; i < kanban.issues.length; i++) {
 				if (kanban.issues[i].state == _todo) {
 					kanban.issues[i].engineer = this.name;
@@ -96,6 +96,10 @@ function Engineer(){
 
 	this.motivate = function(change){
 		this.motivation += change;
+
+		if (this.motivation > 500) {
+			this.motivation = 500;
+		}
 
 		this.colour = "grey";
 
