@@ -95,10 +95,10 @@ function Engineer(){
 			this.colour = "green";
 		}
 
-		if (this.motivation < 50) {
+		if (this.motivation < 75) {
 			this.colour = "red";
 		}
-		if (this.motivation < 20) {
+		if (this.motivation < 25) {
 			this.colour = "black";
 		}
 	}
