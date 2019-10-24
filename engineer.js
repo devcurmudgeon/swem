@@ -27,8 +27,8 @@ function Engineer(){
 					// low      high        -ve
 					// high     low         -ve
 					// low      low         +ve
-					difference = Math.abs(this.aptitude - kanban.issues[i].difficulty)
-					if (difference < 30) {
+					difference = Math.abs(this.aptitude - kanban.issues[i].difficulty);
+					if (difference < 45) {
 						console.log("happy engineer", this.name, this.aptitude, kanban.issues[i].difficulty)
 						this.motivate(difference);
 					} else {
