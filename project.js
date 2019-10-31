@@ -44,7 +44,9 @@ function Project(p){
 	this.plot = function (value) {
 		graphs.fillStyle = this.colour;
 		graphs.beginPath();
-		graphs.arc(this.day * $('#scale').val() % 1600, 495 - (value * 2), 4, 0 , Math.PI*2);
+		var x = this.day * $('#scale').val() % 1600;
+		var y = 495 * (1 - 0.5 * value / $('#scope').val());
+		graphs.arc(x, y, $('#scale').val() * .4, 0 , Math.PI*2);
 		graphs.fill();
 		graphs.closePath();
 	}

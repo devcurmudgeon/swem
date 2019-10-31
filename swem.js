@@ -1,7 +1,7 @@
 function simulate(project){
 	if (!project.stop) {
 		project.workaday();
-		project.plot(parseInt($('#released').text()) *  $('#scale').val() / 10);
+		project.plot(parseInt($('#released').text()));
 	}
 }
 
