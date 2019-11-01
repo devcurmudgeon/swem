@@ -29,10 +29,10 @@ function Engineer(){
 					// low      low         +ve
 					difference = Math.abs(this.aptitude - kanban.issues[i].difficulty);
 					if (difference < 45) {
-						console.log("happy engineer", this.name, this.aptitude, kanban.issues[i].difficulty)
+						console.log("happy engineer", this.name, this.aptitude, kanban.issues[i].difficulty);
 						this.motivate(difference);
 					} else {
-						console.log("unhappy engineer", this.name, this.aptitude, kanban.issues[i].difficulty)
+						console.log("unhappy engineer", this.name, this.aptitude, kanban.issues[i].difficulty);
 						this.motivate(difference * -1);
 					}
 					break;
@@ -56,7 +56,8 @@ function Engineer(){
 				task.state = _blocked;
 				task.day = day + $('#lag').val() * gauss()/100;
 				// being blocked frustrates the engineer a lot
-				this.motivate(-5);
+				console.log("blocked engineer", this.name);
+				this.motivate(-10);
 				this.tasks.push(id);
 				this.get_work(kanban);
 //				console.log("block issue", id, kanban.day);
@@ -96,6 +97,11 @@ function Engineer(){
 
 	this.motivate = function(change){
 		this.motivation += change;
+
+		if (change == -10) {
+			this.colour = "orange";
+			return;
+		}
 
 		if (this.motivation > 500) {
 			this.motivation = 500;
