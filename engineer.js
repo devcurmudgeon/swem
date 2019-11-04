@@ -16,10 +16,10 @@ function Engineer(){
 					kanban.issues[i].engineer = this.name;
 					kanban.issues[i].state = _doing;
 					// exponential effect of ability on time required
-					console.log(this.name, this.aptitude, "gets job", i, kanban.issues[i].hours)
+					console.log(this.name, this.aptitude, "gets task", i, kanban.issues[i].hours)
 					kanban.issues[i].hours *= (101 - this.aptitude)/50;
 					this.tasks.push(i);
-					console.log(this.name, this.aptitude, "will do job", i, kanban.issues[i].hours)
+					console.log(this.name, this.aptitude, "will do task", i, kanban.issues[i].hours)
 					// capable engineer is motivated by hard tasks
 					// less capable engeer is demotivated by hard tasks
 					// aptitude difficulty
@@ -73,16 +73,17 @@ function Engineer(){
 				// making progress pleases the engineer
 				this.motivate(+1);
 				this.tasks.push(id);
-			}
 
-			if (task.hours <= 0) {
-				if ($('#teamsize').val() > 1) {
-					task.state = _review;
-				} else {
-					task.state = _done;
+				if (task.hours <= 0) {
+					if ($('#teamsize').val() > 1) {
+						task.state = _review;
+					} else {
+						task.state = _done;
+					}
+					console.log(this.name, "finishes task", task);
+					task.day = day + $('#lag').val() * gauss()/100;
+					this.motivate(5);
 				}
-				task.day = day + $('#lag').val() * gauss()/100;
-				this.motivate(5);
 			}
 
 			kanban.issues[id] = task;
